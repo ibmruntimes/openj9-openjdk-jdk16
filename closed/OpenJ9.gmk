@@ -182,6 +182,7 @@ $(foreach file, \
 		testlibA \
 		testlibB \
 		vmruntimestateagent29 \
+		clinkerffitests \
 		) \
 	$(patsubst %, $(OPENJ9_VM_BUILD_DIR)/lib%.jnilib, \
 		loadLibraryTest \

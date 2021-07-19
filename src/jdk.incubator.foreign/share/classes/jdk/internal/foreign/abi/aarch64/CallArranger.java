@@ -23,6 +23,13 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+
+/*
+ * ===========================================================================
+ * (c) Copyright IBM Corp. 2021, 2021 All Rights Reserved
+ * ===========================================================================
+ */
+
 package jdk.internal.foreign.abi.aarch64;
 
 import jdk.incubator.foreign.Addressable;
@@ -126,26 +133,15 @@ public class CallArranger {
         return new Bindings(csb.build(), returnInMemory);
     }
 
+    /* Replace ProgrammableInvoker in OpenJDK with the implementation of ProgrammableInvoker specific to OpenJ9 */
     public static MethodHandle arrangeDowncall(Addressable addr, MethodType mt, FunctionDescriptor cDesc) {
-        Bindings bindings = getBindings(mt, cDesc, false);
-
-        MethodHandle handle = new ProgrammableInvoker(C, addr, bindings.callingSequence).getBoundMethodHandle();
-
-        if (bindings.isInMemoryReturn) {
-            handle = SharedUtils.adaptDowncallForIMR(handle, cDesc);
-        }
-
+        MethodHandle handle = ProgrammableInvoker.getBoundMethodHandle(addr, mt, cDesc);
         return handle;
     }
 
+    /* Replace ProgrammableUpcallHandler in OpenJDK with the implementation of ProgrammableUpcallHandler specific to OpenJ9 */
     public static UpcallHandler arrangeUpcall(MethodHandle target, MethodType mt, FunctionDescriptor cDesc) {
-        Bindings bindings = getBindings(mt, cDesc, true);
-
-        if (bindings.isInMemoryReturn) {
-            target = SharedUtils.adaptUpcallForIMR(target);
-        }
-
-        return new ProgrammableUpcallHandler(C, target, bindings.callingSequence);
+       throw new InternalError("arrangeUpcall is not yet implemented"); //$NON-NLS-1$
     }
 
     private static boolean isInMemoryReturn(Optional<MemoryLayout> returnLayout) {

@@ -22,6 +22,13 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+
+/*
+ * ===========================================================================
+ * (c) Copyright IBM Corp. 2021, 2021 All Rights Reserved
+ * ===========================================================================
+ */
+
 package jdk.internal.foreign.abi;
 
 import jdk.incubator.foreign.FunctionDescriptor;
@@ -40,6 +47,9 @@ import jdk.internal.foreign.CABI;
 import jdk.internal.foreign.MemoryAddressImpl;
 import jdk.internal.foreign.Utils;
 import jdk.internal.foreign.abi.aarch64.AArch64Linker;
+import jdk.internal.foreign.abi.ppc64.aix.Aixppc64Linker;
+import jdk.internal.foreign.abi.ppc64.sysv.SysVppc64leLinker;
+import jdk.internal.foreign.abi.s390x.sysv.SysVs390xLinker;
 import jdk.internal.foreign.abi.x64.sysv.SysVx64Linker;
 import jdk.internal.foreign.abi.x64.windows.Windowsx64Linker;
 
@@ -242,6 +252,9 @@ public class SharedUtils {
             case Win64 -> Windowsx64Linker.getInstance();
             case SysV -> SysVx64Linker.getInstance();
             case AArch64 -> AArch64Linker.getInstance();
+            case SysVppc64le -> SysVppc64leLinker.getInstance();
+            case SysVs390x -> SysVs390xLinker.getInstance();
+            case AIX -> Aixppc64Linker.getInstance();
         };
     }
 
@@ -299,6 +312,9 @@ public class SharedUtils {
             case Win64 -> Windowsx64Linker.newVaList(actions, allocator);
             case SysV -> SysVx64Linker.newVaList(actions, allocator);
             case AArch64 -> AArch64Linker.newVaList(actions, allocator);
+            case SysVppc64le -> SysVppc64leLinker.newVaList(actions, allocator);
+            case SysVs390x -> SysVs390xLinker.newVaList(actions, allocator);
+            case AIX -> Aixppc64Linker.newVaList(actions, allocator);
         };
     }
 
@@ -313,6 +329,9 @@ public class SharedUtils {
             case Win64 -> Windowsx64Linker.newVaListOfAddress(ma);
             case SysV -> SysVx64Linker.newVaListOfAddress(ma);
             case AArch64 -> AArch64Linker.newVaListOfAddress(ma);
+            case SysVppc64le -> SysVppc64leLinker.newVaListOfAddress(ma);
+            case SysVs390x -> SysVs390xLinker.newVaListOfAddress(ma);
+            case AIX -> Aixppc64Linker.newVaListOfAddress(ma);
         };
     }
 
@@ -321,6 +340,9 @@ public class SharedUtils {
             case Win64 -> Windowsx64Linker.emptyVaList();
             case SysV -> SysVx64Linker.emptyVaList();
             case AArch64 -> AArch64Linker.emptyVaList();
+            case SysVppc64le -> SysVppc64leLinker.emptyVaList();
+            case SysVs390x -> SysVs390xLinker.emptyVaList();
+            case AIX -> Aixppc64Linker.emptyVaList();
         };
     }
 

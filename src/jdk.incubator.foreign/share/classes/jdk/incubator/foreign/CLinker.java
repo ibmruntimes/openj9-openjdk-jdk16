@@ -23,6 +23,13 @@
  *  questions.
  *
  */
+
+/*
+ * ===========================================================================
+ * (c) Copyright IBM Corp. 2021, 2021 All Rights Reserved
+ * ===========================================================================
+ */
+
 package jdk.incubator.foreign;
 
 import jdk.internal.foreign.NativeMemorySegmentImpl;
@@ -157,39 +164,39 @@ public interface CLinker {
     /**
      * The layout for the {@code char} C type
      */
-    ValueLayout C_CHAR = pick(SysV.C_CHAR, Win64.C_CHAR, AArch64.C_CHAR);
+    ValueLayout C_CHAR = pick(SysV.C_CHAR, Win64.C_CHAR, AArch64.C_CHAR, SysVppc64le.C_CHAR, SysVs390x.C_CHAR, AIX.C_CHAR);
     /**
      * The layout for the {@code short} C type
      */
-    ValueLayout C_SHORT = pick(SysV.C_SHORT, Win64.C_SHORT, AArch64.C_SHORT);
+    ValueLayout C_SHORT = pick(SysV.C_SHORT, Win64.C_SHORT, AArch64.C_SHORT, SysVppc64le.C_SHORT, SysVs390x.C_SHORT, AIX.C_SHORT);
     /**
      * The layout for the {@code int} C type
      */
-    ValueLayout C_INT = pick(SysV.C_INT, Win64.C_INT, AArch64.C_INT);
+    ValueLayout C_INT = pick(SysV.C_INT, Win64.C_INT, AArch64.C_INT, SysVppc64le.C_INT, SysVs390x.C_INT, AIX.C_INT);
     /**
      * The layout for the {@code long} C type
      */
-    ValueLayout C_LONG = pick(SysV.C_LONG, Win64.C_LONG, AArch64.C_LONG);
+    ValueLayout C_LONG = pick(SysV.C_LONG, Win64.C_LONG, AArch64.C_LONG, SysVppc64le.C_LONG, SysVs390x.C_LONG, AIX.C_LONG);
     /**
      * The layout for the {@code long long} C type.
      */
-    ValueLayout C_LONG_LONG = pick(SysV.C_LONG_LONG, Win64.C_LONG_LONG, AArch64.C_LONG_LONG);
+    ValueLayout C_LONG_LONG = pick(SysV.C_LONG_LONG, Win64.C_LONG_LONG, AArch64.C_LONG_LONG, SysVppc64le.C_LONG_LONG, SysVs390x.C_LONG_LONG, AIX.C_LONG_LONG);
     /**
      * The layout for the {@code float} C type
      */
-    ValueLayout C_FLOAT = pick(SysV.C_FLOAT, Win64.C_FLOAT, AArch64.C_FLOAT);
+    ValueLayout C_FLOAT = pick(SysV.C_FLOAT, Win64.C_FLOAT, AArch64.C_FLOAT, SysVppc64le.C_FLOAT, SysVs390x.C_FLOAT, AIX.C_FLOAT);
     /**
      * The layout for the {@code double} C type
      */
-    ValueLayout C_DOUBLE = pick(SysV.C_DOUBLE, Win64.C_DOUBLE, AArch64.C_DOUBLE);
+    ValueLayout C_DOUBLE = pick(SysV.C_DOUBLE, Win64.C_DOUBLE, AArch64.C_DOUBLE, SysVppc64le.C_DOUBLE, SysVs390x.C_DOUBLE, AIX.C_DOUBLE);
     /**
      * The {@code T*} native type.
      */
-    ValueLayout C_POINTER = pick(SysV.C_POINTER, Win64.C_POINTER, AArch64.C_POINTER);
+    ValueLayout C_POINTER = pick(SysV.C_POINTER, Win64.C_POINTER, AArch64.C_POINTER, SysVppc64le.C_POINTER, SysVs390x.C_POINTER, AIX.C_POINTER);
     /**
      * The layout for the {@code va_list} C type
      */
-    MemoryLayout C_VA_LIST = pick(SysV.C_VA_LIST, Win64.C_VA_LIST, AArch64.C_VA_LIST);
+    MemoryLayout C_VA_LIST = pick(SysV.C_VA_LIST, Win64.C_VA_LIST, AArch64.C_VA_LIST, SysVppc64le.C_VA_LIST, SysVs390x.C_VA_LIST, AIX.C_VA_LIST);
 
     /**
      * Returns a memory layout that is suitable to use as the layout for variadic arguments in a specialized
