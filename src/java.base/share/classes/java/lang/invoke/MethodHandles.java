@@ -23,6 +23,12 @@
  * questions.
  */
 
+/*
+ * ===========================================================================
+ * (c) Copyright IBM Corp. 2021, 2021 All Rights Reserved
+ * ===========================================================================
+ */
+
 package java.lang.invoke;
 
 import jdk.internal.access.SharedSecrets;
@@ -5748,6 +5754,10 @@ assertEquals("[top, [[up, down, strange], charm], bottom]",
         MethodType filterType = filter.type();
         Class<?> rtype = filterType.returnType();
         List<Class<?>> filterArgs = filterType.parameterList();
+        if (pos < 0 || (rtype == void.class && pos > targetType.parameterCount()) ||
+                       (rtype != void.class && pos >= targetType.parameterCount())) {
+            throw newIllegalArgumentException("position is out of range for target", target, pos);
+        }
         if (rtype == void.class) {
             return targetType.insertParameterTypes(pos, filterArgs);
         }
@@ -6675,7 +6685,7 @@ assertEquals("boojum", (String) catTrace.invokeExact("boo", "jum"));
                 pred.set(i, dropArguments0(constant(boolean.class, true), 0, commonParameterSequence));
             }
             if (fini.get(i) == null) {
-                fini.set(i, empty(methodType(t, commonParameterSequence)));
+                fini.set(i, empty(methodType(loopReturnType, commonParameterSequence)));
             }
         }
 

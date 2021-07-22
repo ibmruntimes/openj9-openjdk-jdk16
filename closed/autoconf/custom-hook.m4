@@ -372,15 +372,15 @@ AC_DEFUN([OPENJ9_CONFIGURE_OPENJDK_METHODHANDLES],
 [
   AC_MSG_CHECKING([for openjdk-methodhandles])
   AC_ARG_ENABLE([openjdk-methodhandles], [AS_HELP_STRING([--enable-openjdk-methodhandles], [enable support for OpenJDK MethodHandles @<:@disabled@:>@])])
-  OPENJ9_ENABLE_OPENJDK_METHODHANDLES=false
-
   if test "x$enable_openjdk_methodhandles" = xyes ; then
     AC_MSG_RESULT([yes (explicitly enabled)])
     OPENJ9_ENABLE_OPENJDK_METHODHANDLES=true
   elif test "x$enable_openjdk_methodhandles" = xno ; then
     AC_MSG_RESULT([no (explicitly disabled)])
+    OPENJ9_ENABLE_OPENJDK_METHODHANDLES=false
   elif test "x$enable_openjdk_methodhandles" = x ; then
-    AC_MSG_RESULT([no (default)])
+    AC_MSG_RESULT([yes (default)])
+    OPENJ9_ENABLE_OPENJDK_METHODHANDLES=true
   else
     AC_MSG_ERROR([--enable-openjdk-methodhandles accepts no argument])
   fi
@@ -574,7 +574,6 @@ AC_DEFUN_ONCE([CUSTOM_LATE_HOOK],
     OPENJ9_TOOL_DIR="$OUTPUTDIR/tools"
     AC_SUBST([OPENJ9_TOOL_DIR])
     OPENJ9_GENERATE_TOOL_WRAPPERS
-    AC_CONFIG_FILES([$OUTPUTDIR/toolchain-win.cmake:$CLOSED_AUTOCONF_DIR/toolchain-win.cmake.in])
 
     # We used to rely on VS_INCLUDE and VS_LIB directly, but those are no longer available
     # for substitutions, and they're not Windows-style paths: Convert them for our use.
@@ -583,6 +582,8 @@ AC_DEFUN_ONCE([CUSTOM_LATE_HOOK],
     AC_SUBST(OPENJ9_VS_INCLUDE)
     AC_SUBST(OPENJ9_VS_LIB)
   fi
+  AC_SUBST([SYSROOT])
+  AC_CONFIG_FILES([$OUTPUTDIR/toolchain.cmake:$CLOSED_AUTOCONF_DIR/toolchain.cmake.in])
 ])
 
 AC_DEFUN([CONFIGURE_OPENSSL],
